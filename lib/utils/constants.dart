@@ -1,7 +1,7 @@
 class AppConstants {
   static const int APP_VERSION = 1;
-  // static const String apiBASEURL = "https://vaultz.itsbohara.com/api";
-  static const String apiBASEURL = "http://192.168.0.108:9999/api";
+  // static const String apiBASEURL = "http://192.168.0.108:9999/api";
+  static const String apiBASEURL = "https://vaultz.itsbohara.com/api";
 
   static const int pbkdf2iterations = 150000;
   static const int PBKDF2DeriveBitLength = 384;

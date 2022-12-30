@@ -79,8 +79,6 @@ class ApiClient extends GetConnect implements GetxService {
   Future<Response> putData(String url, FormData data) async {
     try {
       Response response = await put(url, data, headers: _fileHeaders);
-      print("afer puttting");
-      print(response.body);
       return _response(response);
     } on SocketException {
       return Response(statusCode: 502, statusText: "No internet connection!");

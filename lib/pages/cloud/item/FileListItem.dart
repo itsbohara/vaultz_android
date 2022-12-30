@@ -17,7 +17,20 @@ class FileListItem extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 1),
       child: ListTile(
-        leading: SvgPicture.asset(getIconAsset(file.mimetype)),
+        leading: Stack(
+          children: [
+            SvgPicture.asset(getIconAsset(file.mimetype)),
+            file.encrypted!
+                ? Positioned(
+                    bottom: 0,
+                    child: Image.asset(
+                      // "assets/lock.png",
+                      file.locked! ? "assets/lock.png" : "assets/shield.png",
+                      height: file.locked! ? 13 : 16,
+                    ))
+                : SizedBox(),
+          ],
+        ),
         onTap: () => openFile(file),
         title: Text(
           file.name!,
