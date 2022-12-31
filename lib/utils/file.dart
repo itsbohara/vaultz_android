@@ -39,3 +39,14 @@ getIconAsset(mime) {
   /// try to get file icon
   return "assets/icons/file/ic_" + getFileFormat(mime) + '.svg';
 }
+
+List<dynamic> sortByOptions = [
+  {'name': "Name", 'key': 'name'},
+  {'name': "Size", 'key': 'size'},
+  {'name': "Last Modified", 'key': 'updatedAt'},
+  {'name': "Last Opened", 'key': 'openedAt'},
+];
+
+getSortName(String key) {
+  return sortByOptions.firstWhere((element) => element['key'] == key)['name'];
+}

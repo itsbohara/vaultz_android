@@ -51,6 +51,7 @@ class _VautlzLoginPageState extends State<VautlzLoginPage> {
   }
 
   void loginWithBiometric() async {
+    if (!auth.bioAuth) return;
     try {
       final bool didAuthenticate = await bioAuth.authenticate(
           localizedReason: 'Please confirm to login to vaultz',

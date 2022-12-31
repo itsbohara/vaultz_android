@@ -31,9 +31,9 @@ class _TrashHomeState extends State<TrashHome> {
 
   toggleView() => setState(() => listView = !listView);
 
-  void handleEmptyTrash() async {
+  void handleEmptyTrash(ctx) async {
     await dirController.clearTrash();
-    Navigator.pop(context);
+    Navigator.pop(ctx);
   }
 
   emptyTrash() {
@@ -52,7 +52,7 @@ class _TrashHomeState extends State<TrashHome> {
             ),
             TextButton(
               child: const Text('Delete forever'),
-              onPressed: !loading ? handleEmptyTrash : null,
+              onPressed: () => !loading ? handleEmptyTrash(context) : null,
             ),
           ],
         );

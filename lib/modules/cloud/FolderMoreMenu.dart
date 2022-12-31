@@ -12,6 +12,7 @@ import 'package:vaultz/utils/file.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/teenyicons.dart';
+import 'package:iconify_flutter/icons/zondicons.dart';
 
 class FolderMoreMenu extends StatelessWidget {
   FolderMoreMenu({Key? key, this.folder}) : super(key: key);
@@ -64,6 +65,16 @@ class FolderMoreMenu extends StatelessWidget {
             onTap: () {
               // TODO download folder
               Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Iconify(
+                folder!.hidden! ? Zondicons.view_show : Zondicons.view_hide),
+            title: Text(folder!.hidden! ? "Unhide" : 'Hide'),
+            onTap: () {
+              Navigator.pop(context);
+              folderController
+                  .updateFolder(folder!.id!, {'hidden': !folder!.hidden!});
             },
           ),
           ListTile(

@@ -24,6 +24,12 @@ class DirectoryController extends GetxController implements GetxService {
   List<String> _openedDirs = [];
   List<String> get openedDirs => _openedDirs;
 
+  /// sorting
+  String _sortKey = 'name';
+  String get sortKey => _sortKey;
+  bool _ascSort = true;
+  bool get ascSort => _ascSort;
+
   void addActiveDir(String dir) {
     if (_openedDirs.indexWhere((element) => element == dir) == -1) {
       _openedDirs.add(dir);
@@ -40,11 +46,12 @@ class DirectoryController extends GetxController implements GetxService {
     update();
   }
 
-  Future<ResponseModel> getMyCloud() async {
+  Future<ResponseModel> getMyCloud({bool hidden = false}) async {
     _isLoading = true;
     update();
-    Response foldersRes = await fileRepo.getFolders();
-    Response filesRes = await fileRepo.getFiles();
+    _activeFolder = null;
+    Response foldersRes = await fileRepo.getFolders(hidden: hidden);
+    Response filesRes = await fileRepo.getFiles(hidden: hidden);
     late ResponseModel responseModel;
 
     if (foldersRes.isOk) {
@@ -85,7 +92,13 @@ class DirectoryController extends GetxController implements GetxService {
   Future<void> updateFolder(String folderID, dynamic data) async {
     var res = await fileRepo.updateFolder(folderID, data);
     int Index = _folders.indexWhere((element) => element.id == folderID);
-    _folders[Index] = Folder.fromJson(res.body);
+    var updatedFoler = Folder.fromJson(res.body);
+    if (updatedFoler.hidden!) {
+      // remove folder if marked as hidden
+      _folders.removeWhere((element) => element.id == folderID);
+    } else {
+      _folders[Index] = updatedFoler;
+    }
   }
 
   Future<void> trashFolder(String folderID) async {
@@ -186,6 +199,32 @@ class DirectoryController extends GetxController implements GetxService {
     await fileRepo.clearTrash();
     _folders.removeRange(0, _folders.length < 1 ? 0 : _folders.length);
     _files.removeRange(0, _files.length < 1 ? 0 : _files.length);
+    update();
+  }
+
+  /// ==================
+  void sortByKey(String key) {
+    if (key == 'name') {
+      _folders.sort((a, b) => a.name!.compareTo(b.name!));
+      _files.sort((a, b) => a.name!.compareTo(b.name!));
+    }
+    if (key == 'size') {
+      _folders.sort((a, b) => a.size!.compareTo(b.size!));
+      _files.sort((a, b) => a.size!.compareTo(b.size!));
+    }
+    if (key == 'updatedAt') {
+      _folders.sort((a, b) => a.updatedAt!.compareTo(b.updatedAt!));
+      _files.sort((a, b) => a.updatedAt!.compareTo(b.updatedAt!));
+    }
+
+    if (_sortKey == key) {
+      if (!_ascSort) {
+        _folders = _folders.reversed.toList();
+        _files = _files.reversed.toList();
+      }
+      _ascSort = !ascSort;
+    }
+    _sortKey = key;
     update();
   }
 }

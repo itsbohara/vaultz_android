@@ -75,12 +75,12 @@ class FileRepo extends GetxService {
     return await apiClient.putDataOnly("/directory/new", body);
   }
 
-  Future<Response> getFolders() async {
-    return await apiClient.getData('/folders');
+  Future<Response> getFolders({bool hidden = false}) async {
+    return await apiClient.getData('/folders?hidden=$hidden');
   }
 
-  Future<Response> getFiles() async {
-    return await apiClient.getData('/files');
+  Future<Response> getFiles({bool hidden = false}) async {
+    return await apiClient.getData('/files?hidden=$hidden');
   }
 
   Future<Response> getFolder(String folderID) async {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:vaultz/controllers/directory.controller.dart';
 import 'package:vaultz/controllers/file.controller.dart';
 import 'package:vaultz/utils/file.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -11,6 +12,7 @@ import 'package:iconify_flutter/icons/teenyicons.dart';
 class SortViewMenu extends StatelessWidget {
   SortViewMenu({Key? key}) : super(key: key);
   final fileController = Get.find<FileController>();
+  final dir = Get.find<DirectoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +32,18 @@ class SortViewMenu extends StatelessWidget {
             margin: EdgeInsets.zero,
             child: Column(
               children: [
-                ListTile(
-                    onTap: () => {},
-                    leading: Icon(Icons.arrow_upward_rounded),
-                    title: Text("Name")),
-                ListTile(
-                    onTap: () => {},
-                    leading: Icon(Icons.arrow_upward_rounded),
-                    title: Text("Size")),
-                ListTile(
-                    onTap: () => {},
-                    leading: Icon(Icons.arrow_upward_rounded),
-                    title: Text("Last Modified")),
-                ListTile(
-                    onTap: () => {},
-                    leading: Icon(Icons.arrow_upward_rounded),
-                    title: Text("Last Opened")),
+                ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(0),
+                    shrinkWrap: true,
+                    itemCount: sortByOptions.length,
+                    itemBuilder: (context, index) => ListTile(
+                        onTap: () {
+                          Navigator.pop(context);
+                          dir.sortByKey(sortByOptions[index]['key']);
+                        },
+                        leading: Icon(Icons.arrow_upward_rounded),
+                        title: Text(sortByOptions[index]['name']))),
               ],
             ),
           ),

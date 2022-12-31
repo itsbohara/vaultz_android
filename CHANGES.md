@@ -1,5 +1,10 @@
 # Vault Android App | Change Logs
 
+## v1.0.1
+
+- show/hide folders
+- directory sort by field
+
 ## v1.0.0
 
 - authentication

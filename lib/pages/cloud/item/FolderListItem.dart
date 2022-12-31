@@ -18,6 +18,9 @@ class FolderListItem extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 1),
       child: ListTile(
+          tileColor: folder.hidden!
+              ? Color.fromARGB(53, 130, 1, 1)
+              : Colors.transparent,
           leading: SvgPicture.asset("assets/icons/ic_folder.svg"),
           onTap: () => Navigator.pushNamed(ctx, '/folder-view',
                       arguments: {'id': folder.id, 'name': folder.name})
