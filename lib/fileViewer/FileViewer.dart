@@ -37,7 +37,9 @@ class _FileViewerState extends State<FileViewer> {
   downloadFile() async {
     var url = widget.file!.url!;
     if (Uri.parse(widget.file!.url!).host.isEmpty) {
-      url = 'http://192.168.0.108:9999' + url;
+      // url = 'http://192.168.0.108:9999' + url;
+      showCustomErrorSnackbar("Invalid file source");
+      Navigator.pop(context);
     }
     var file = await DefaultCacheManager().getSingleFile(url);
 
@@ -105,7 +107,6 @@ class _FileViewerState extends State<FileViewer> {
           return VideoViewer(file: vaultzFile);
         }
         if (fileType == 'audio') {
-          print(vautlzFile);
           return AudioPlayer(file: vaultzFile);
         }
         return Container(

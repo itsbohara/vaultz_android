@@ -46,7 +46,7 @@ class _VaultzHomeState extends State<VaultzHome> {
       default:
         return Center(
           child: Text(
-            "Page Not avaialble",
+            "Page Not Available",
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         );

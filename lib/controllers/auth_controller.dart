@@ -47,7 +47,6 @@ class AuthController extends GetxController implements GetxService {
     late ResponseModel responseModel;
 
     Response response = await authRepo.login(email, password);
-    responseModel = ResponseModel(false, "failed");
     if (response.statusCode == 200) {
       // @demo:byPass
       await authRepo.saveUserToken(token: response.body['_token']);

@@ -22,11 +22,6 @@ class AuthRepo extends GetxService {
     return await apiClient.postData('/account/register', data);
   }
 
-  Future<Response> updateCourse(String courseId) async {
-    return await apiClient
-        .postData('/account/update-course', {'course': courseId});
-  }
-
   Future<Response> getCurrentUser() async {
     return await apiClient.getData('/account/me');
   }
