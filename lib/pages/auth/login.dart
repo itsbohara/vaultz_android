@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vaultz/controllers/auth_controller.dart';
 import 'package:vaultz/controllers/settings_controller.dart';
+import 'package:vaultz/controllers/vaultz_controller.dart';
 import 'package:vaultz/core/snackbar.dart';
 import 'package:vaultz/pages/home.dart';
 import 'package:vaultz/utils/validator.dart';
@@ -16,6 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var vaultzController = Get.find<VaultzController>();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _showPassword = false;
   final emailController = TextEditingController();
@@ -30,13 +33,18 @@ class _LoginPageState extends State<LoginPage> {
     var password = passwordController.text;
 
     var loginResult = await loginController.loginUser(email, password);
-    // loginResult.isSuccess
-    // if (loginResult.isSuccess) Navigator.of(context).pop();
     if (loginResult.isSuccess) {
-      // await loginController.getCurrentUser();
+      await loginController.initAuthUser();
+      if (loginController.isAuthorized) {
+        var vaultzLogin = await vaultzController.login(password);
+        if (vaultzLogin.isSuccess) {
+          Get.offAndToNamed('/home');
+        } else {
+          Get.offAllNamed('/boot');
+        }
+      }
       // Get.until((route) => Get.currentRoute == '/home');
       // Get.offAllNamed('/home');
-      Get.offAllNamed('/boot');
     }
     if (!loginResult.isSuccess) {
       if (loginResult.message == "Verify") {

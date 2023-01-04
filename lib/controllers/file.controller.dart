@@ -271,7 +271,6 @@ class FileController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     late ResponseModel responseModel;
-
     var activeFolder = Get.find<DirectoryController>().activeFolder;
     try {
       var res = await fileRepo.uploadEncryptedFile(
@@ -297,7 +296,6 @@ class FileController extends GetxController implements GetxService {
     late ResponseModel responseModel;
     var activeFolder = Get.find<DirectoryController>().activeFolder;
     try {
-      // final auth = Get.find<AuthController>();
       var res =
           await fileRepo.uploadFile(file, mbCloud: true, dir: activeFolder?.id);
       if (res.statusCode == 200) {

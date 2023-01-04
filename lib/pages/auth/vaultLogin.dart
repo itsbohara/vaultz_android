@@ -43,6 +43,11 @@ class _VautlzLoginPageState extends State<VautlzLoginPage> {
     }
   }
 
+  handleLogout() async {
+    await auth.logoutUser();
+    Get.offAndToNamed('/login');
+  }
+
   @override
   void initState() {
     super.initState();
@@ -222,6 +227,14 @@ class _VautlzLoginPageState extends State<VautlzLoginPage> {
                             ),
                           ],
                         ),
+                        SizedBox(height: 10),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                  onPressed: handleLogout,
+                                  child: Text("Logout"))
+                            ])
                       ],
                     ),
                   ),

@@ -16,7 +16,7 @@ class FileRepo extends GetxService {
       {String? dir, bool mbCloud = false}) async {
     var fileName = file.path.split('/').last;
     if (mbCloud) {
-      return uploadToMBCloud(file, fileName, dir: dir, encrypted: true);
+      return uploadToMBCloud(file, fileName, dir: dir, encrypted: false);
     }
     var uploadFile = MultipartFile(file, filename: fileName);
     final form = FormData({'file': uploadFile});
@@ -52,7 +52,7 @@ class FileRepo extends GetxService {
     }
     final form = FormData({
       'file': uploadFile,
-      "encrypted": true,
+      "encrypted": encrypted,
       "api": AppConstants.MB_CLOUD_API
     });
     if (dir != null) {

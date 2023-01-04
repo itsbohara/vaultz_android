@@ -9,7 +9,7 @@ class DirectoryController extends GetxController implements GetxService {
   final FileRepo fileRepo;
   DirectoryController({required this.fileRepo});
 
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool get isLoading => _isLoading;
 
   List<Folder> _folders = [];
