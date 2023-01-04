@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:vaultz/controllers/file.controller.dart';
 import 'package:vaultz/core/snackbar.dart';
 import 'package:path/path.dart';
+import 'package:vaultz/utils/constants.dart';
 import 'package:vaultz/utils/file.dart';
 import 'package:mime/mime.dart';
 
@@ -52,6 +53,10 @@ class _FileUploadPageState extends State<FileUploadPage> {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
+      if (result.files.single.size > AppConstants.FILE_UL) {
+        showCustomErrorSnackbar("File size more than 1 GB is not allowed.");
+        return;
+      }
       File file = File(result.files.single.path!);
       setState(() => selectedFile = file);
     } else {

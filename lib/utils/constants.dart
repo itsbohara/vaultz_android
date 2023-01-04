@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class AppConstants {
   static const int APP_VERSION = 1;
+  static const int FILE_UL = 1024 * 1024 * 1024; //bytes = 1 GB
   // static const String apiBASEURL = kReleaseMode
   //     ? "https://vaultz.itsbohara.com/api"
   //     : "http://192.168.0.108:9999/api";
