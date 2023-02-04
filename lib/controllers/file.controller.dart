@@ -60,7 +60,8 @@ class FileController extends GetxController implements GetxService {
   Uint8List _encFileData = Uint8List.fromList([]);
 
 //  file encryption at client side for before uploading
-  Uint8List? toEncryptFile;
+  // Uint8List? toEncryptFile;
+  RandomAccessFile? toEncryptFile;
   bool _encryptForUploading = true;
   bool get encryptFile => _encryptForUploading;
 
@@ -190,8 +191,6 @@ class FileController extends GetxController implements GetxService {
           await theDecryptionKey?.decryptBytes(chunk, decryptionIVBytes!);
       return true;
     } catch (e) {
-      print("file decrypt test failed ??");
-      print(e);
       _isDecrypting = false;
       _isLoading = false;
       return false;
@@ -240,7 +239,8 @@ class FileController extends GetxController implements GetxService {
   Future<void> continueEncryption() async {
     fileIndex += CHUNK_SIZE;
     var chunkSize = fileSize < fileIndex ? fileSize : fileIndex;
-    var chunk = toEncryptFile?.sublist(fileIndex, ivLength + CHUNK_SIZE).first;
+    toEncryptFile?.setPositionSync(fileIndex);
+    var chunk = toEncryptFile?.readSync(ivLength + CHUNK_SIZE);
     encryptRestofChunks(chunk, fileIndex >= fileSize);
   }
 
@@ -256,12 +256,13 @@ class FileController extends GetxController implements GetxService {
   }
 
   Future encryptVaultzFile(File file) async {
-    toEncryptFile = await file.readAsBytes();
     reset();
+    // toEncryptFile = await file.readAsBytes();
+    toEncryptFile = file.openSync(mode: FileMode.read);
     fileSize = file.lengthSync();
     await setupVaultzEncryptionKey();
     var chunkSize = fileSize < CHUNK_SIZE ? fileSize : CHUNK_SIZE;
-    var chunk = toEncryptFile?.sublist(fileIndex, chunkSize);
+    var chunk = toEncryptFile?.readSync(chunkSize);
     fileIndex = CHUNK_SIZE;
     encryptFirstChunks(chunk, fileIndex >= fileSize);
   }

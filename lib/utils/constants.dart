@@ -6,8 +6,8 @@ class AppConstants {
   // static const String apiBASEURL = kReleaseMode
   //     ? "https://vaultz.itsbohara.com/api"
   //     : "http://192.168.0.108:9999/api";
-  static const String apiBASEURL = "http://192.168.0.108:9999/api";
-  // static const String apiBASEURL = "https://vaultz.itsbohara.com/api";
+  // static const String apiBASEURL = "http://192.168.0.108:9999/api";
+  static const String apiBASEURL = "https://vaultz.itsbohara.com/api";
 
   static const int pbkdf2iterations = 150000;
   static const int PBKDF2DeriveBitLength = 384;
